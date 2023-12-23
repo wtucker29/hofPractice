@@ -25,6 +25,21 @@ var moreFruits = function (fruits) {
 // use _.each to traverse the number array and determine
 // which are multiples of five.
 var multiplesOfFive = function (numbers) {
+  // use _.each to access the number array
+  var countOf5 = 0;
+  _.each(numbers, function(number, index, collection) {
+
+    if (number % 5 === 0) {
+      countOf5 += 1;
+      var result = number;
+    }
+  });
+
+  if (countOf5 === 1) {
+    return result;
+  } else if (countOf5 > 1) {
+    return countOf5;
+  }
 
 };
 
