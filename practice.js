@@ -188,14 +188,30 @@ var applyCoupon = function (groceries, coupon) {
  */
 
 // return the total price of all products.
-var sumTotal = function (products) {
+var sumTotal = function (groceries) {
+  var sum = function(total, product) {
+    var itemPrice = parseFloat(product['price'].substring(1));
+    return total + itemPrice;
+  };
 
+  var result = _.reduce(groceries, sum, 0);
+  return result;
 };
 
 // return an object consisting of dessert types and how many of each.
 // exampleOutput: { dessertType: 3, dessertType2: 1 }
 var dessertCategories = function (desserts) {
+  var category = function(catObj, dessert) {
+    if (catObj[dessert.type] === undefined) {
+      catObj[dessert.type] = 1;
+    } else {
+      catObj[dessert.type] += 1;
+    }
+    return catObj;
+  };
 
+  var result = _.reduce(desserts, category, {});
+  return result;
 };
 
 // return an object with the proper count of all user messages
@@ -210,19 +226,45 @@ var dessertCategories = function (desserts) {
   }
 */
 var countMessagesPerUser = function(tweets) {
+  var count = function(userObj, tweet) {
+    if (userObj[tweet.user] === undefined) {
+      userObj[tweet.user] = 1;
+    } else {
+      userObj[tweet.user] += 1;
+    }
+    return userObj;
+  };
 
+  var result = _.reduce(tweets, count, {});
+  return result;
 };
 
 // given an array of movie data objects,return an array containing
 // movies that came out between 1990 and 2000.
 // TIP: use an array as your accumulator - don't push to an external array!
 var ninetiesKid = function (movies) {
+  var timeFrame = function(yearArr, movie) {
+    if (movie.releaseYear >= 1990 && movie.releaseYear <= 2000) {
+      yearArr.push(movie.title);
+    }
+    return yearArr;
+  };
 
+  var result = _.reduce(movies, timeFrame, []);
+  return result;
 };
 
 // return an boolean stating if there exists a movie with a shorter
 // runtime than your time limit.
 // timeLimit is an integer representing a number of minutes.
 var movieNight = function (movies, timeLimit) {
+  var limit = function(time, movie) {
+    if (movie.runtime <= timeLimit) {
+      return true;
+    }
+    return time;
+  };
 
+  var result = _.reduce(movies, limit, false);
+  return result;
 };
